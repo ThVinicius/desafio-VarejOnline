@@ -1,16 +1,20 @@
-import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {LoginService} from "../../shared/service/login.service";
+import {ToastService} from "angular-toastify";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  title = "frontend";
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+              private service: LoginService,
+  ) {
+  }
 
   ngOnInit() {
     this.createForm();
@@ -23,7 +27,12 @@ export class LoginComponent {
     });
   }
 
-  onKeepSigned() {}
+  onSubmit() {
+    const username: string = this.loginForm.get("username").value
+    const password: string = this.loginForm.get("password").value
+    const auth = {Authorization: "Basic " + btoa(`${username}:${password}`)}
 
-  onSubmit() {}
+    this.service.signIn(auth)
+  }
+
 }
