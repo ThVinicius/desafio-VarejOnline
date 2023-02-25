@@ -3,7 +3,7 @@ package br.comvarejonline.projetoinicial.services;
 import br.comvarejonline.projetoinicial.dto.request.ProductDto;
 import br.comvarejonline.projetoinicial.dto.response.NextProductId;
 import br.comvarejonline.projetoinicial.dto.response.ProductResponse;
-import br.comvarejonline.projetoinicial.models.OpenBalanceMovementProduct;
+import br.comvarejonline.projetoinicial.models.OpenBalanceModel;
 import br.comvarejonline.projetoinicial.models.ProductModel;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -17,11 +17,11 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository repository;
 
-    private final OpenBalanceMovementProductService openBalanceMovementProductService;
+    private final OpenBalanceService openBalanceService;
 
-    public ProductService(ProductRepository repository, OpenBalanceMovementProductService openBalanceMovementProductService) {
+    public ProductService(ProductRepository repository, OpenBalanceService openBalanceService) {
         this.repository = repository;
-        this.openBalanceMovementProductService = openBalanceMovementProductService;
+        this.openBalanceService = openBalanceService;
     }
 
     @Transactional
@@ -29,12 +29,12 @@ public class ProductService {
         var product = new ProductModel(productDto.getName(), productDto.getBarCode(), productDto.getMinimumAmount());
         ProductModel productSave = repository.save(product);
 
-        var openBalanceMovementProduct = new OpenBalanceMovementProduct(productDto.getOpenBalanceMovement(), productSave);
-        openBalanceMovementProductService.saveOpenBalanceMovement(openBalanceMovementProduct);
+        var openBalanceMovementProduct = new OpenBalanceModel(productDto.getOpenBalance(), productSave);
+        openBalanceService.saveOpenBalance(openBalanceMovementProduct);
 
         ProductResponse productResponse = new ProductResponse();
         BeanUtils.copyProperties(productSave, productResponse);
-        productResponse.setOpenBalanceMovementProduct(productDto.getOpenBalanceMovement());
+        productResponse.setOpenBalanceMovementProduct(productDto.getOpenBalance());
 
         return productResponse;
     }

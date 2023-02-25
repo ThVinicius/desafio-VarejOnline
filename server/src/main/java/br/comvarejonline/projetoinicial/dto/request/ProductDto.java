@@ -21,10 +21,10 @@ public class ProductDto {
 
     @NotNull
     @Min(0)
-    private Long openBalanceMovement;
+    private Long openBalance;
 
     @AssertTrue(message = "openBalanceMovement deve ser maior ou igual à minimumAmount")
-    public boolean isAmountValidate() {
-        return this.openBalanceMovement >= this.minimumAmount;
+    public boolean AmountValid() {
+        return this.openBalance >= this.minimumAmount;
     }
 }

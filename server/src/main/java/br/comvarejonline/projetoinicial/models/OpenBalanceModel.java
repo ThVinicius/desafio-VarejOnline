@@ -8,15 +8,15 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "open_balance_movement_products")
+@Table(name = "open_balance")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class OpenBalanceMovementProduct {
+public class OpenBalanceModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long openBalanceMovementProductId;
+    private Long openBalanceId;
 
     @NonNull
     @Column(nullable = false)

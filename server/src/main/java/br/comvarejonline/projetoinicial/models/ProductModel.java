@@ -23,7 +23,7 @@ public class ProductModel {
     private String name;
 
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String barCode;
 
     @NonNull
@@ -31,5 +31,5 @@ public class ProductModel {
     private Long minimumAmount;
 
     @OneToOne(mappedBy = "product")
-    private OpenBalanceMovementProduct openBalanceMovementProduct;
+    private OpenBalanceModel openBalanceMovementProduct;
 }
