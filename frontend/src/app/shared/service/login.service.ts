@@ -14,7 +14,8 @@ export class LoginService {
   constructor(private httpClient: HttpClient,
               private authService: AuthService,
               private router: Router,
-              private toastService: ToastService) {}
+              private toastService: ToastService) {
+  }
 
   signIn(auth: { Authorization: string }) {
     const headers = {headers: new HttpHeaders(auth)}
