@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -30,6 +31,15 @@ public class ProductModel {
     @Column(nullable = false)
     private Long minimumAmount;
 
+    @Column(nullable = false)
+    private LocalDateTime registrationDate;
+
     @OneToOne(mappedBy = "product")
     private OpenBalanceModel openBalanceMovementProduct;
+
+    @PrePersist
+    public void prePersist() {
+        this.registrationDate = LocalDateTime.now();
+    }
+
 }
