@@ -1,6 +1,7 @@
 package br.comvarejonline.projetoinicial.exceptions;
 
 import br.comvarejonline.projetoinicial.dto.exception.ErrorHandle;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,5 +30,11 @@ public class ControllerException {
 
 
         return list;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    protected String handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        return "Esse código de barras (barCode) já está cadastrado";
     }
 }
