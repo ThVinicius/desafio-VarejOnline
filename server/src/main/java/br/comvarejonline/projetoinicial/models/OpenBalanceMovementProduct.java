@@ -8,28 +8,22 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "open_balance_movement_products")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class ProductModel {
+public class OpenBalanceMovementProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long openBalanceMovementProductId;
 
     @NonNull
     @Column(nullable = false)
-    private String name;
+    private Long amount;
 
     @NonNull
-    @Column(nullable = false)
-    private String barCode;
-
-    @NonNull
-    @Column(nullable = false)
-    private Long minimumAmount;
-
-    @OneToOne(mappedBy = "product")
-    private OpenBalanceMovementProduct openBalanceMovementProduct;
+    @OneToOne
+    @JoinColumn(name = "productId")
+    private ProductModel product;
 }

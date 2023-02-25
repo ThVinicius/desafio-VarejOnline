@@ -1,11 +1,12 @@
 package br.comvarejonline.projetoinicial.controllers;
 
+import br.comvarejonline.projetoinicial.dto.request.ProductDto;
 import br.comvarejonline.projetoinicial.dto.response.NextProductId;
+import br.comvarejonline.projetoinicial.dto.response.ProductResponse;
 import br.comvarejonline.projetoinicial.services.ProductService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,8 +19,13 @@ public class ProductController {
     }
 
     @GetMapping("/next-id")
-    public NextProductId getNextId (){
+    public NextProductId getNextId() {
         return service.getNextId();
+    }
+
+    @PostMapping
+    public ProductResponse save(@RequestBody @Valid ProductDto productDto) {
+        return service.saveProduct(productDto);
     }
 
 }
