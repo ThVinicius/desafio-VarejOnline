@@ -16,5 +16,5 @@ public class ProductResponse {
 
     private Long minimumAmount;
 
-    private Long openBalanceMovementProduct;
+    private Long openBalance;
 }

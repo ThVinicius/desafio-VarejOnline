@@ -34,8 +34,6 @@ public class ProductModel {
     @Column(nullable = false)
     private LocalDateTime registrationDate;
 
-    @OneToOne(mappedBy = "product")
-    private OpenBalanceModel openBalanceMovementProduct;
 
     @PrePersist
     public void prePersist() {

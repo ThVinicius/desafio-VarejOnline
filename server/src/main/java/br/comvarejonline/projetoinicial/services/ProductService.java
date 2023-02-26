@@ -2,6 +2,7 @@ package br.comvarejonline.projetoinicial.services;
 
 import br.comvarejonline.projetoinicial.dto.request.ProductDto;
 import br.comvarejonline.projetoinicial.dto.response.NextProductId;
+import br.comvarejonline.projetoinicial.dto.response.ProductInfo;
 import br.comvarejonline.projetoinicial.dto.response.ProductResponse;
 import br.comvarejonline.projetoinicial.models.OpenBalanceModel;
 import br.comvarejonline.projetoinicial.models.ProductModel;
@@ -29,14 +30,18 @@ public class ProductService {
         var product = new ProductModel(productDto.getName(), productDto.getBarCode(), productDto.getMinimumAmount());
         ProductModel productSave = repository.save(product);
 
-        var openBalanceMovementProduct = new OpenBalanceModel(productDto.getOpenBalance(), productSave);
-        openBalanceService.saveOpenBalance(openBalanceMovementProduct);
+        var openBalance = new OpenBalanceModel(productDto.getOpenBalance(), productSave);
+        openBalanceService.saveOpenBalance(openBalance);
 
         ProductResponse productResponse = new ProductResponse();
         BeanUtils.copyProperties(productSave, productResponse);
-        productResponse.setOpenBalanceMovementProduct(productDto.getOpenBalance());
+        productResponse.setOpenBalance(productDto.getOpenBalance());
 
         return productResponse;
+    }
+
+    public List<ProductInfo> findAll() {
+        return repository.findAllWithInfo();
     }
 
 

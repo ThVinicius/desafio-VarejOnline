@@ -23,7 +23,7 @@ public class OpenBalanceModel {
     private Long amount;
 
     @NonNull
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private ProductModel product;
 }
