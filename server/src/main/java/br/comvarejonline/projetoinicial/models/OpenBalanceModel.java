@@ -16,7 +16,7 @@ public class OpenBalanceModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long openBalanceId;
+    private Long id;
 
     @NonNull
     @Column(nullable = false)

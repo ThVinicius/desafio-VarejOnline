@@ -52,7 +52,7 @@ public class ProductService {
         Long nextId;
 
         if (lastProduct == null) nextId = 1L;
-        else nextId = lastProduct.getProductId() + 1;
+        else nextId = lastProduct.getId() + 1;
 
         return new NextProductId(nextId);
     }

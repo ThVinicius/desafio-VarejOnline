@@ -19,7 +19,7 @@ public class RoleModel implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long id;
 
     @NonNull
     @Enumerated(EnumType.STRING)
