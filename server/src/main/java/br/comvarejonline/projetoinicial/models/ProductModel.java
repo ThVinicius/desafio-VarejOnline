@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -34,10 +35,30 @@ public class ProductModel {
     @Column(nullable = false)
     private LocalDateTime registrationDate;
 
+    @OneToOne(mappedBy = "product")
+    private OpenBalanceModel openBalance;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<InputBalanceModel> inputsBalance;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<OutputBalanceModel> outputsBalance;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<InputAdjustBalanceModel> inputsAdjustBalance;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<OutputAdjustBalanceModel> outputsAdjustBalance;
 
     @PrePersist
     public void prePersist() {
-        this.registrationDate = LocalDateTime.now();
+
+        this.registrationDate = LocalDateTime
+                .now()
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
     }
 
 }
