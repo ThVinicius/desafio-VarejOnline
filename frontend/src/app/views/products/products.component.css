@@ -2,6 +2,15 @@
   flex: 1 1 auto;
 }
 
+.inputs-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
 .form-container {
   width: 100%;
   height: fit-content;
@@ -15,10 +24,14 @@
 }
 
 mat-form-field, .mat-input-element {
-  font-size: 25px !important;
+  font-size: 18px !important;
 }
 
 .product-btn {
   margin-top: 20px;
   font-size: 18px !important;
+}
+
+.input-date {
+  width: 150px;
 }

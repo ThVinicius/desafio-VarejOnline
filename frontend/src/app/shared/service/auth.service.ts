@@ -15,9 +15,7 @@ export class AuthService {
   }
 
   checkAuthority(authorities: string[]): boolean {
-    const aux = authorities.some((value) => value === this.authority)
-    console.log("Verificação de autoridade", aux)
-    return aux
+    return authorities.some((value) => value === this.authority)
   }
 
   checkLogin() {

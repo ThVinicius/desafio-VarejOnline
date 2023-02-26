@@ -19,70 +19,75 @@
     <mat-card>
       <mat-card>
         <form (submit)="postProduct()" [formGroup]="productForm" class="form-container">
-          <mat-form-field class="input-container">
-            <mat-label>ID</mat-label>
-            <input
-              disabled
-              formControlName="productId"
-              matInput>
-          </mat-form-field>
+          <div class="inputs-container">
+            <mat-form-field class="input-container">
+              <mat-label>ID</mat-label>
+              <input
+                disabled
+                formControlName="productId"
+                matInput>
+              <mat-error *ngIf="productForm.get('productId').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="input-container">
-            <mat-label>Código de barras</mat-label>
-            <input
-              autofocus
-              formControlName="barCode"
-              matInput
-              placeholder="Ex. 12346 1811551 5181818">
-            <mat-error *ngIf="productForm.get('barCode').hasError('required')">
-              Esse campo é obrigatório
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="input-container">
+              <mat-label>Código de barras</mat-label>
+              <input
+                autofocus
+                formControlName="barCode"
+                matInput
+                placeholder="Ex. 12346 1811551 5181818">
+              <mat-error *ngIf="productForm.get('barCode').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="input-container">
-            <mat-label>Nome do produto</mat-label>
-            <input
-              formControlName="name"
-              matInput
-              placeholder="Ex. Chocolate em pó">
-            <mat-error *ngIf="productForm.get('name').hasError('required')">
-              Esse campo é obrigatório
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="input-container">
+              <mat-label>Nome do produto</mat-label>
+              <input
+                formControlName="name"
+                matInput
+                placeholder="Ex. Chocolate em pó">
+              <mat-error *ngIf="productForm.get('name').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="input-container">
-            <mat-label>Quantidade mínima</mat-label>
-            <input
-              formControlName="minimumAmount"
-              matInput
-              placeholder="Ex. 50">
-            <mat-error *ngIf="productForm.get('minimumAmount').hasError('required')">
-              Esse campo é obrigatório
-            </mat-error>
-            <mat-error *ngIf="productForm.get('minimumAmount').hasError('pattern')">
-              Esse campo aceita somente números
-            </mat-error>
-            <mat-error *ngIf="productForm.get('minimumAmount').hasError('min')">
-              O número tem que ser maior que 0
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="input-container">
+              <mat-label>Quantidade mínima</mat-label>
+              <input
+                formControlName="minimumAmount"
+                matInput
+                placeholder="Ex. 50">
+              <mat-error *ngIf="productForm.get('minimumAmount').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+              <mat-error *ngIf="productForm.get('minimumAmount').hasError('pattern')">
+                Esse campo aceita somente números
+              </mat-error>
+              <mat-error *ngIf="productForm.get('minimumAmount').hasError('min')">
+                O número tem que ser maior que 0
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="input-container">
-            <mat-label>Saldo inicial</mat-label>
-            <input
-              formControlName="openBalance"
-              matInput
-              placeholder="Ex. 50">
-            <mat-error *ngIf="productForm.get('openBalance').hasError('required')">
-              Esse campo é obrigatório
-            </mat-error>
-            <mat-error *ngIf="productForm.get('openBalance').hasError('pattern')">
-              Esse campo aceita somente números
-            </mat-error>
-            <mat-error *ngIf="productForm.get('openBalance').hasError('min')">
-              O número tem que ser maior que 0
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="input-container">
+              <mat-label>Saldo inicial</mat-label>
+              <input
+                formControlName="openBalance"
+                matInput
+                placeholder="Ex. 50">
+              <mat-error *ngIf="productForm.get('openBalance').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+              <mat-error *ngIf="productForm.get('openBalance').hasError('pattern')">
+                Esse campo aceita somente números
+              </mat-error>
+              <mat-error *ngIf="productForm.get('openBalance').hasError('min')">
+                O número tem que ser maior que 0
+              </mat-error>
+            </mat-form-field>
+          </div>
           <button class="product-btn" color="primary" mat-raised-button type="submit">Cadastrar Produto</button>
         </form>
 
@@ -92,35 +97,103 @@
   <mat-tab label="Cadastrar uma movimentação">
     <mat-card>
       <mat-card>
-        <form class="form-container">
-          <mat-form-field appearance="fill">
-            <mat-label>Favorite food</mat-label>
-            <mat-select [(ngModel)]="selectedValue" name="food">
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-                {{food.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <form (submit)="postMovement()" [formGroup]="movementForm" class="form-container">
+          <div class="inputs-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Produto</mat-label>
+              <mat-select
+                (change)="onChangeDate()"
+                (mouseenter)="getProducts()"
+                formControlName="productId"
+              >
+                <ng-container *ngIf="isProductReady">
+                  <mat-option *ngFor="let product of products" [value]="product.productId">
+                    {{product.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Movimento</mat-label>
-            <mat-select name="movement">
-              <mat-option value="ENTRADA">ENTRADA</mat-option>
-              <mat-option value="SAÍDA">SAÍDA</mat-option>
-              <mat-option *ngIf="authService.checkAuthority(['GERENTE'])" value="AJUSTE_ENTRADA">
-                AJUSTE_ENTRADA
-              </mat-option>
-              <mat-option *ngIf="authService.checkAuthority(['GERENTE'])" value="AJUSTE_SAÍDA">
-                AJUSTE_SAÍDA
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Movimento</mat-label>
+              <mat-select (ngModelChange)="inputOrOutput()" formControlName="movement">
+                <mat-option value="ENTRADA">ENTRADA</mat-option>
+                <mat-option value="SAÍDA">SAÍDA</mat-option>
+                <mat-option *ngIf="authService.checkAuthority(['GERENTE'])" value="AJUSTE_ENTRADA">
+                  AJUSTE_ENTRADA
+                </mat-option>
+                <mat-option *ngIf="authService.checkAuthority(['GERENTE'])" value="AJUSTE_SAÍDA">
+                  AJUSTE_SAÍDA
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="movementForm.get('movement').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
 
+            <mat-form-field class="input-container">
+              <mat-label>Quantidade</mat-label>
+              <input
+                formControlName="amount"
+                matInput
+                placeholder="Ex. 50">
+              <mat-error *ngIf="movementForm.get('amount').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+              <mat-error *ngIf="movementForm.get('amount').hasError('pattern')">
+                Esse campo aceita somente números
+              </mat-error>
+              <mat-error *ngIf="movementForm.get('amount').hasError('min')">
+                O número tem que ser maior que 0
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="input-date">
+              <mat-label>Choose a date</mat-label>
+              <input [matDatepicker]="picker" [min]="minDate"
+                     formControlName="movementDate" matInput>
+              <mat-error *ngIf="movementForm.get('movementDate').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="input-container">
+              <mat-label>Motivo</mat-label>
+              <input
+                formControlName="reason"
+                matInput
+                placeholder="Ex. Vendido para a empresa X">
+              <mat-error *ngIf="movementForm.get('reason').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="isInputOrOutput" class="input-container">
+              <mat-label>Documento</mat-label>
+              <input
+                formControlName="document"
+                matInput
+                placeholder="Ex. número do documento: 1234579218">
+              <mat-error *ngIf="movementForm.get('document').hasError('required')">
+                Esse campo é obrigatório
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+          <button class="product-btn" color="primary" mat-raised-button type="submit">
+            Enviar
+          </button>
         </form>
       </mat-card>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Third"> Content 3</mat-tab>
+  <mat-tab label="Movimentações">
+
+
+  </mat-tab>
 </mat-tab-group>
 
 

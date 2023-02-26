@@ -4,7 +4,7 @@ import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {ToastService} from "angular-toastify";
 import {environment} from "../../../environments/environment";
-import {INextProductId, IProduct} from "../type/product.type";
+import {INextProductId, IProduct, IProductInfo} from "../type/product.type";
 import {FormGroup} from "@angular/forms";
 
 @Injectable({
@@ -29,7 +29,9 @@ export class ProductService {
       .subscribe(() => {
           this.toastService.success("produto cadastrado com sucesso!")
           form.reset()
-          form.get("productId").setValue(this.getNextProductId())
+          this.getNextProductId().subscribe(
+            result => form.get("productId").setValue(result.nextProductId))
+
         }
         ,
         err => {
@@ -38,11 +40,19 @@ export class ProductService {
               this.toastService.error("Usuário ou senha incorreto")
               break
 
+            case 409:
+              this.toastService.error("Esse código de barras já está cadastrado!")
+              break
+
             default:
               this.toastService.error("Ocorreu um erro no servidor!")
               break
           }
         })
+  }
+
+  getProducts() {
+    return this.httpClient.get<IProductInfo[]>(this.apiUrl, this.headers)
   }
 
 }
