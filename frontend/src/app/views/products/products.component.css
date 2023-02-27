@@ -1,3 +1,22 @@
+mat-toolbar {
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-toolbar img {
+  height: 60px;
+}
+
+.logout-btn {
+  padding: 15px;
+  border: none;
+  font: normal 700 20px sans-serif !important;
+  background-color: inherit;
+  color: red;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }

@@ -27,6 +27,12 @@ export class AuthService {
     }
   }
 
+  logout() {
+    this.auth = null
+    this.authority = null
+    this.router.navigateByUrl("/")
+  }
+
   setAuth(auth: { Authorization: string }) {
     this.auth = auth
   }

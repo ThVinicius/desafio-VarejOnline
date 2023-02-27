@@ -1,16 +1,7 @@
 <p>
   <mat-toolbar>
-    <button aria-label="Example icon-button with menu icon" class="example-icon" mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button aria-label="Example icon-button with heart icon" class="example-icon favorite-icon" mat-icon-button>
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button aria-label="Example icon-button with share icon" class="example-icon" mat-icon-button>
-      <mat-icon>share</mat-icon>
-    </button>
+    <img src="../assets/images/logo-varejo-nome.png"/>
+    <button (click)="authService.logout()" class="logout-btn">Logout</button>
   </mat-toolbar>
 </p>
 
@@ -191,7 +182,6 @@
     </mat-card>
   </mat-tab>
   <mat-tab label="Movimentações">
-
 
   </mat-tab>
 </mat-tab-group>
